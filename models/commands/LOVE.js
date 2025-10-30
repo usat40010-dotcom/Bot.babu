@@ -1,5 +1,5 @@
 module.exports.config = {
-    name: "love",
+    name: "dp",
     version: "7.3.1",
     hasPermssion: 0,
     credits: " Priyansh Rajput", 
@@ -45,7 +45,7 @@ async function makeImage({ one, two }) {
     
     let circleOne = await jimp.read(await circle(avatarOne));
     let circleTwo = await jimp.read(await circle(avatarTwo));
-    batgiam_img.composite(circleOne.resize(350, 350), 70, 160).composite(circleTwo.resize(350, 350), 630, 160);
+    batgiam_img.composite(circleOne.resize(200, 200), 70, 160).composite(circleTwo.resize(200, 200), 630, 160);
     
     let raw = await batgiam_img.getBufferAsync("image/png");
     
@@ -69,6 +69,6 @@ module.exports.run = async function ({ event, api, args }) {
     if (!mention[0]) return api.sendMessage("Please mention 1 person.", threadID, messageID);
     else {
         const one = senderID, two = mention[0];
-        return makeImage({ one, two }).then(path => api.sendMessage({ body: "           ╔═══❖••° °••❖═══╗\n\n              ❥༺𝙺𝙰𝙱𝚄𝚃𝙰𝚁𝙸༻❦\n\n           ╚═══❖••° °••❖═══╝\n❥────────────────────❥\n                👑 𝐌𝐈𝐋 𝐆𝐀𝐘𝐈 ❤\n\n        🌸👀 𝐓𝐄𝐑𝐈 𝐁𝐄𝐒𝐓𝐈𝐄 🩷😍\n❥────────────────────❥\n✨🥀___𝙰𝙱 𝙼𝙰𝚃 𝙱𝙾𝙻𝙽𝙰 𝙺𝙸 𝙼𝚄𝙹𝙷𝙴 𝙱𝙴𝚂𝚃𝙸𝙴 𝙲𝙷𝙰𝙷𝙸𝚈𝙴___👀🍒🌸", attachment: fs.createReadStream(path) }, threadID, () => fs.unlinkSync(path), messageID));
+        return makeImage({ one, two }).then(path => api.sendMessage({ body: "     •", attachment: fs.createReadStream(path) }, threadID, () => fs.unlinkSync(path), messageID));
     }
   }
