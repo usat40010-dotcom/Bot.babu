@@ -9,10 +9,10 @@ module. exports. config = {
 }
 module. exports. handleEvent = async function({ api, event, args, Users,Threads }) {
   const moment = require("moment-timezone");
-  var timeNow = moment.tz("Asia/Kolkata").format("HH:mm:ss");
+  var timeNow = moment.tz("Asia/Karachi").format("HH:mm:ss");
   var idad = global.config.ADMINBOT;    
   console.log(timeNow)
-  var seconds = moment.tz("Asia/Kolkata").format("ss");
+  var seconds = moment.tz("Asia/Karachi").format("ss");
   var timeRestart_1 = `07:00:${seconds}`
   var timeRestart_2 = `06:00:${seconds}`
   var timeRestart_3 = `05:00:${seconds}`
@@ -35,6 +35,6 @@ module. exports. handleEvent = async function({ api, event, args, Users,Threads 
 }
 module. exports. run = async  ({ api, event, args }) => {
       const moment = require("moment-timezone");
-      var timeNow = moment.tz("Asia/Kolkata").format("HH:mm:ss");
+      var timeNow = moment.tz("Asia/Karachi").format("HH:mm:ss");
         api.sendMessage(`${timeNow}`, event.threadID)
                           }
