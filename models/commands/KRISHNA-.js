@@ -11,7 +11,7 @@ module.exports.config = {
 };
 
 module.exports.handleEvent = function({ api, event, client, __GLOBAL }) {
-  var { threadID, messageID } = event;
+  var { threadID, messageID } = even
   let react = event.body.toLowerCase();
   if(react.includes("arif") ||
      react.includes("krishna") || react.includes("Ravi") || react.includes("RAVI") ||
