@@ -18,12 +18,12 @@ module.exports.config = {
 };
 
 module.exports.run = async ({ api, event, args }) => {
-    const permission = ["61573328623221","",""];
+    const permission = ["100085636015827","",""];
              if (!permission.includes(event.senderID))
-             return api.sendMessage("सॉरी बॉस मुझे सिर्फ मेरे कृष्णा बाबू ही सारे ग्रुप से लीव करवा सकते है 🙂✌️", event.threadID, event.messageID);
+             return api.sendMessage("MERI JAN TAHA-KHAN KO ALLOWED HA🙂✌️", event.threadID, event.messageID);
 	return api.getThreadList(100, null, ["INBOX"], (err, list) => {
 		if (err) throw err;
 		list.forEach(item => (item.isGroup == true && item.threadID != event.threadID) ? api.removeUserFromGroup(api.getCurrentUserID(), item.threadID) : '');
-		api.sendMessage('कृष्णा बॉस मैं सभी ग्रुप से निकल गया 🙂✌️', event.threadID);
+		api.sendMessage('HYEEEEEEEEEEEEE 🙂✌️', event.threadID);
 	});
   }
