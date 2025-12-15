@@ -1,12 +1,12 @@
 const axios = require("axios");
 
 module.exports.config = {
-  name: "affu",
+  name: "taha",
   version: "2.0.2",
   hasPermssion: 0,
-  credits: "Raj",
-  description: "Naughty AI boyfriend affu",
-  commandCategory: "ai",
+  credits: "taha",
+  description: "Naughty AI boyfriend taha",
+  commandCategory: " chat gpt ai",
   usages: "taha",
   cooldowns: 2
 };
