@@ -67,7 +67,7 @@ module.exports.handleEvent = async function({ api, event, args, Threads, Users }
         reply = rand; // fallback to random tl line
       }
       const formattedMessage = {
-        body: `${name} ${reply}`
+        body: `$💋{name}💋 ${reply}`
       };
       return api.sendMessage(formattedMessage, threadID, messageID);
     } catch (err) {
