@@ -60,8 +60,8 @@ users.needObject=Have to be an Object
 # includes/handle/handleCommand.js
 
 handleCommand.userBanned=⛔️~Tu Banned Hai Re 🤭!~🚫\n%1\n%2\nContact B0T Owner Taha babu 🖤 For Unban ⚠️
-handleCommand.threadBanned=⛔️Your Thread/Box/Group Has Been Banned!⛔️\n%1\n%2 Please Contact Owner arif bab For Unban ⚠️
-handleCommand.commandNotExist=सॉरी दोस्त कमांड नहीं है •┄┅═══❁TAHA BABU❁═══┅┄•
+handleCommand.threadBanned=⛔️Your Thread/Box/Group Has Been Banned!⛔️\n%1\n%2 Please Contact Owner TAHA bab For Unban ⚠️
+handleCommand.commandNotExist=G HUKME KRHA MERI JAN •┄┅═══❁TAHA BABU❁═══┅┄•
 handleCommand.commandThreadBanned=Your thread is unable to use command "%1"
 handleCommand.commandUserBanned=You are unable to use command "%1"
 handleCommand.threadNotAllowNSFW=Your thread is not allowed to use NSFW commands
