@@ -31,7 +31,35 @@ module.exports.run = async function({ api, event }) {
         if (event.logMessageData.addedParticipants.some(i => i.userFbId == api.getCurrentUserID())) {
                 api.changeNickname(`{ ${global.config.PREFIX} } × ${(!global.config.BOTNAME) ? "bot" : global.config.BOTNAME}`, threadID, api.getCurrentUserID());
                 const fs = require("fs");
-                return api.sendMessage("🩵🍒 assalamualaikum everyone 🙋🏻‍♀️", event.threadID, () => api.sendMessage({body:`💝 TAHA BOT💝\n✧═════════•❁❀❁•═════════✧\n💝 ENJOY 💝\n✧═════════•❁❀❁•═════════✧\n🇲‌🇦‌🇸‌🇹‌🇮‌ 🇧‌🇴‌🇹‌\n✧═════════•❁❀❁•═════════✧\n🍒🌸🍒KHUSH RHO 🍒🌸🍒\n✧═════════•❁❀❁•═════════✧\n ☟☟ 🍒🩵JANU ENJOY  ☟☟\ntahakhan \n✧═════════•❁❀❁•═════════✧\n🩷🩵dilll sa most we'llcome 🌸💝🍒\n✧═════════•❁❀❁•═════════✧\nUse ${global.config.PREFIX}help to see commands.\nexample :\n${global.config.PREFIX}video7 (video songs)\n${global.config.PREFIX}music (audio songs)\n${global.config.PREFIX}help2 (command list)\n${global.config.PREFIX}info\n✧═════════•❁❀❁•═════════✧\n💝🍒 JANU ☟☟☟\nhttps://www.facebook.com/profile.php?id=100085636015827\n✧═════════•❁❀❁•═════════✧\n🩵🌸🍒  ☟☟☟\n[ 𝟴𝟬𝟵𝟰𝐗𝐗𝐗𝐗𝟯𝟳 ]`, attachment: fs.createReadStream(__dirname + "")} ,threadID));
+                return api.sendMessage("Assalamu Alaikum Everyone🥀🥀", event.threadID, () => api.sendMessage({body:`🌺taha🦋🌺 CONNECTED«
+
+Bot Made By TAHA KHAN☘️
+<------------------------------>  
+BOT CONNECTED SUCCESFUL !!! 
+
+APPROVAL ALLOW IN THIS GROUP!!!
+<------------------------------>
+
+USE HELP TO SEE COMMAND 
+\n\nUse ${global.config.PREFIX}help to see commands.\n\nexample :\n${global.config.PREFIX}video7 (video songs)\n${global.config.PREFIX}music (audio songs)\n${global.config.PREFIX}help2 (command list)\n${global.config.PREFIX}info 
+<<<<<------------------------------>>>>>
+AND FOR ANY REPORT OR CONTACT BOT DEVELOPER
+
+OWNER: 𝐒𝐇𝐀𝐀𝐍
+
+♻️Facebook: 
+
+https://www.facebook.com/profile.php?id=100085636015827
+
+Youtube Site : N/A
+
+☢️ INSTAGRAM: N/A
+
+https://www.............
+
+☣️Email: LOVE YOU
+
+⚠️Wp: +........*** `, attachment: fs.createReadStream(__dirname + "/cache/lv_7256561222877826306_20250410093120.mp4")} ,threadID));
         }
         else {
                 try {
@@ -52,7 +80,7 @@ module.exports.run = async function({ api, event }) {
                         }
                         memLength.sort((a, b) => a - b);
 
-                        (typeof threadData.customJoin == "undefined") ? msg = "🙋🏻‍♀️𝐖𝐄𝐋𝐂𝐎𝐌𝐄 𝐍𝐄𝐖 𝐌𝐄𝐌𝐁𝐄𝐑 🙋🏻‍♀️\n✧═════════•❁❀❁•═════════✧\n💝🍒 ➻ [ {name} ]\n✧═════════•❁❀❁•═════════✧\n🌸🍒  ➻ [ {threadName} ]\n✧═════════•❁❀❁•═════════✧\n🤓🌸 WELL COME⭆[ {soThanhVien} ]⭅ 🥰🩵\n✧═════════•❁❀❁•═════════✧\n😘 MERI JAN🍒💝🙋🏻‍♀️\n✧═════════•❁❀❁•═════════✧\n ☟☟ 🍒🩵  ☟☟\ntahakhan\n✧═════════•❁❀❁•═════════✧\n💝🍒  ☟☟☟\nhttps://www.facebook.com/profile.php?id=100985636015827\n✧═════════•❁❀❁•═════════✧\n🩵🌸🍒☟☟☟\n[ 𝟴𝟬𝟵𝟰𝐗𝐗𝐗𝐗𝟯𝟳 ]" : msg = threadData.customJoin;
+                        (typeof threadData.customJoin == "undefined") ? msg = "𝐖𝐞𝐥𝐜𝐨𝐦𝐞   𝐓𝐨  𝐓𝐀𝐇𝐀 𝐊𝐇𝐀𝐍  𝐁𝐨𝐭  😇● ========================= ●\n● ======= 𝐇𝐄𝐋𝐋𝐎 𝐁𝐀𝐁𝐘 ======= ●\n● ========================= ●\n\n● ==== 🆆 🅴🅻🅻 🅲🅾🅼 🅴 ==== ●\n\n● ========= 𝐍𝐄𝐖 ========= ●\n\n● ==== 🇲‌ 🇪‌ 🇲‌ 🇧‌ 🇪‌ 🇷‌ ==== ●\n\n● ========================= ● [   {name} ]\n● ========================= ●\n● ====== 𝐌𝐘 𝐆𝐑𝐎𝐔𝐏 ===== ●\n\n{threadName}\n\n● = 🥀 𝐇𝐀𝐏𝐏𝐘 𝐄𝐍𝐉𝐎𝐘 🥀 = ●\n\n● == 🥀 𝐌𝐀𝐉𝐄 𝐊𝐀𝐑𝐎 🥀  == ●\n● ========================= ● 𝐎𝐑 𝐓𝐔𝐌 𝐈𝐒 𝐆𝐑𝐎𝐔𝐏 𝐊𝐄  {soThanhVien} 𝐌𝐄𝐌𝐁𝐀𝐑 𝐇𝐎 𝐄𝐍𝐉𝐎𝐘 𝐊𝐀𝐑𝐎 𝐌𝐀𝐉𝐄 𝐋𝐎 [ . ] ● ========================= ●\n\n● ========================= ●\n● ======= 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐓𝐨 ====== ●\n\n☟  ========== ☟ ==========  ☟\n\n=𝐎𝐰𝐧𝐞𝐫 ➻    🌹 𝐓𝐚𝐡𝐚 𝐊𝐡𝐚𝐧 𝐊 🌹\n● ========================= ●" : msg = threadData.customJoin;
                         msg = msg
                         .replace(/\{name}/g, nameArray.join(', '))
                         .replace(/\{type}/g, (memLength.length > 1) ?  'You' : 'Friend')
@@ -73,4 +101,4 @@ module.exports.run = async function({ api, event }) {
                         return api.sendMessage(formPush, threadID);
                 } catch (e) { return console.log(e) };
         }
-                    }
+        }
