@@ -6,7 +6,7 @@ module.exports.config = {
     name: "autosent",
     version: "12.0.0",
     hasPermssion: 0,
-    credits: "ARIF BABU",
+    credits: "TAHA BABU",
     description: "Auto Time Message With Date & Time",
     commandCategory: "group messenger",
     usages: "[]",
@@ -49,7 +49,8 @@ function buildMessage(time, text) {
 ✦••┈┈┈┈┈┈┈ ✧ ┈┈┈┈┈┈┈••✦
 😊  𝙏𝙄𝙈𝙀  ✅
 ╰──────── ★ ·. · ────────╯
-
+run:    ${uptime}
+day:     ${daily}
 🕐 𝗧𝗶𝗺𝗲: ${time}
 📅 𝗗𝗮𝘁𝗲: ${now.format("DD MMMM YYYY").toUpperCase()}
 
