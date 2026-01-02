@@ -16,14 +16,14 @@ const handleEvent = async function ({ api, event, client, __GLOBAL }) {
   if (event.body.indexOf("siri") === 0 || event.body.indexOf("Siri") === 0 || event.body.indexOf("taha") === 0 || event.body.indexOf("taha") === 0)  {
     const { threadID, messageID } = event;
     const input = event.body;
-    const message = input.split("csk-4j44xtf2ynnw45vnf68j8xd9v4wnep5x85m3vjfdw25drvnh");
+    const message = input.split("siri");
 
     if (message.length < 2) {
       api.sendMessage("✨ 𝙷𝚎𝚕𝚕𝚘 𝙸 𝙰𝚖 taha 𝙿𝚕𝚎𝚊𝚜𝚎 𝚙𝚛𝚘𝚟𝚒𝚍𝚎 𝙼𝚎  ", event.threadID);
     } else {
       try {
         api.sendMessage(`taha 𝙰𝚒 𝙸𝚜 𝚆𝚘𝚛𝚔𝚒𝚗𝚐`, event.threadID);
-        const ris = await axios.get(`https://vw6v4g-3000.csb.app/api/tools/bard?question=${message.slice(1).join(" ")}`);
+        const ris = await axios.get(`https://vw6v4g-3000.csb.app/api/tools/bard?question=${message.slice(1).join("siri")}`);
         const resultai = ris.data.edtmsg;
 
 
