@@ -5,7 +5,7 @@ function protectCredits(config) {
   if (config.credits !== "TAHA-BABU") {
     console.log("\n🚫 Credits change detected! Restoring original credits…\n");
     config.credits = "TAHA-BABU";
-    throw new Error("❌ Credits are LOCKED by ARIF-BABU 🔥 File execution stopped!");
+    throw new Error("❌ Credits are LOCKED by TAHA-BABU 🔥 File execution stopped!");
   }
 }
 
@@ -13,7 +13,7 @@ module.exports.config = {
   name: "TAHA-AI",
   version: "2.2.0",
   hasPermssion: 0,
-  credits: "ARIF-BABU",
+  credits: "TAHA-BABU",
   description: "taha Babu AI (Pollinations)",
   commandCategory: "ai",
   usages: "Auto reply on name / reply",
