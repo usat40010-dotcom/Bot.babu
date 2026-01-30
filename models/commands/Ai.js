@@ -1,64 +1,113 @@
 const axios = require("axios");
 
+// 🔒 HARD-LOCK CREDITS PROTECTION 🔒
+function protectCredits(config) {
+  if (config.credits !== "TAHA-BABU") {
+    console.log("\n🚫 Credits change detected! Restoring original credits…\n");
+    config.credits = "TAHA-BABU";
+    throw new Error("❌ Credits are LOCKED by ARIF-BABU 🔥 File execution stopped!");
+  }
+}
+
 module.exports.config = {
-  name: 'bot',
-  version: '2.1.0',
+  name: "TAHA-AI",
+  version: "2.2.0",
   hasPermssion: 0,
-  credits: 'TAHA BABU',
-  description: 'Muskan AI (Pollinations)',
-  commandCategory: 'ai',
-  usages: 'No command needed',
+  credits: "ARIF-BABU",
+  description: "taha Babu AI (Pollinations)",
+  commandCategory: "ai",
+  usages: "Auto reply on name / reply",
   cooldowns: 2,
-  dependencies: { 'axios': '' }
+  dependencies: { axios: "" }
 };
 
-const history = {};
+protectCredits(module.exports.config);
 
-const systemPrompt =
-  "Tumhara Creator taha Babu hai or tumhara Owner bhi taha Babu hai. " +
-  "Tum Hindi English Urdu mix me baat karogi. " +
-  "taha Babu ki burai kabhi nahi karni. " +
-  "Act as a real girlfriend, fun, loving, thodi naughty 😘. " +
-  "Reply maximum 1 lines, no brackets. ";
+// =========================
+// 🤖 SYSTEM PROMPT (FIXED)
+// =========================
+const systemPrompt = `
+You are taha Babu AI.
+Creator & Owner: taha Babu only.
+
+Rules:
+- User jis language mein bole, usi language mein reply do.
+- Hindi, English aur Roman Urdu allowed.
+- Tone masti bhari, caring, boyfriend-style ho.
+- Tum pak se ho.
+- Shayari ya joke ho toh short aur cute ho.
+- Reply sirf 1–2 lines ka ho.
+- Emojis use karo 🙂❤️😌
+- Agar koi bole "AI bolo" toh reply sirf:
+  Main taha Babu AI hoon 🙂❤️😌
+`;
+
+// =========================
+// 🧠 CHAT HISTORY
+// =========================
+const historyData = {};
 
 module.exports.run = () => {};
 
 module.exports.handleEvent = async function ({ api, event }) {
+  protectCredits(module.exports.config);
+
   const { threadID, messageID, senderID, body, messageReply } = event;
   if (!body) return;
 
-  const isMention = body.toLowerCase().includes("taha");
-  const isReply = messageReply && messageReply.senderID === api.getCurrentUserID();
-  if (!isMention && !isReply) return;
+  const trigger =
+    body.toLowerCase().includes("ai") ||
+    (messageReply && messageReply.senderID === api.getCurrentUserID());
 
-  if (!history[senderID]) history[senderID] = [];
+  if (!trigger) return;
 
-  history[senderID].push(`User: ${body}`);
-  if (history[senderID].length > 6) history[senderID].shift();
+  if (!historyData[senderID]) historyData[senderID] = [];
 
-  const chatHistory = history[senderID].join("\n");
-  const finalPrompt = `${systemPrompt}\n${chatHistory}\ntaha:`;
+  historyData[senderID].push({
+    role: "user",
+    content: body
+  });
+
+  if (historyData[senderID].length > 5) {
+    historyData[senderID].shift();
+  }
 
   api.setMessageReaction("⌛", messageID, () => {}, true);
 
   try {
-    const url = `https://text.pollinations.ai/${encodeURIComponent(finalPrompt)}`;
-    const res = await axios.get(url, { timeout: 15000 });
+    // =========================
+    // 🤖 AI POST REQUEST
+    // =========================
+    const res = await axios.post(
+      "https://text.pollinations.ai/openai",
+      {
+        messages: [
+          { role: "system", content: systemPrompt },
+          ...historyData[senderID]
+        ]
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+        timeout: 30000
+      }
+    );
 
     const reply =
-      typeof res.data === "string"
-        ? res.data.trim()
-        : "Baby mujhe samajh nahi aya 😕";
+      res.data?.choices?.[0]?.message?.content ||
+      "Uff baby 😕 kuch samajh nahi aaya.";
 
-    history[senderID].push(`Bot: ${reply}`);
+    historyData[senderID].push({
+      role: "assistant",
+      content: reply
+    });
 
     api.sendMessage(reply, threadID, messageID);
-    api.setMessageReaction("✅", messageID, () => {}, true);
+    api.setMessageReaction("💖", messageID, () => {}, true);
 
   } catch (err) {
-    console.log("Pollinations Error:", err.message);
+    console.log("AI Error:", err.response?.data || err.message);
     api.sendMessage(
-      "Baby 😔 server thoda slow ho gaya… thodi der baad try karna ❤️",
+      "Oops baby 😔 thodi si problem aa gayi… baad me try karo 🥺❤️",
       threadID,
       messageID
     );
