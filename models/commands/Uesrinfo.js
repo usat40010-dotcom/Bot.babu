@@ -1,65 +1,85 @@
 const axios = require("axios");
-const fs = require("fs");
+const fs = require("fs-extra");
 const path = require("path");
 
 module.exports.config = {
-  name: "userinfo",
-  version: "1.0.3",
-  hasPermission: 0,
-  credits: "KOJA-TAHA",
-  description: "Get information about a user and send their avatar photo",
-  usages: "[userID | mention]",
-  cooldowns: 5,
-  commandCategory: "info",
-  hasPrefix: true
+  name: "userinfo",
+  version: "1.1.0",
+  hasPermssion: 0,
+  credits: "ARIF BABU",
+  description: "(Reply / Mention / Self)",
+  usePrefix: true,
+  commandCategory: "utility",
+  usages: "[reply | mention | self]",
+  cooldowns: 5,
+  dependencies: {
+    "axios": "",
+    "fs-extra": ""
+  }
 };
 
-module.exports.run = async function({ api, event, args }) {
-  try {
-    // Get mentioned user or use first argument
-    const mentioned = Object.keys(event.mentions || {});
-    const targetId = mentioned.length ? mentioned[0] : args[0];
+module.exports.run = async ({ api, event }) => {
+  try {
+    let uid;
 
-    if (!targetId) {
-      api.sendMessage("Please provide a user ID or mention a user.", event.threadID);
-      return;
-    }
+    // ✅ UID detect
+    if (event.type === "message_reply") {
+      uid = event.messageReply.senderID;
+    } else if (Object.keys(event.mentions).length > 0) {
+      uid = Object.keys(event.mentions)[0];
+    } else {
+      uid = event.senderID;
+    }
 
-    api.getUserInfo(targetId, async (err, userInfo) => {
-      if (err || !userInfo[targetId]) {
-        console.error(err);
-        api.sendMessage("Could not fetch user information. Make sure the ID is valid.", event.threadID);
-        return;
-      }
+    // ✅ User Info
+    const data = await api.getUserInfo(uid);
+    const user = data[uid];
 
-      const info = userInfo[targetId];
-      const gender = info.gender === "MALE" ? "👨 Male" : info.gender === "FEMALE" ? "👩 Female" : "❓ Unknown";
-      const isFriend = info.isFriend ? "✅ Friend" : "❌ Not a Friend";
-      const isBirthday = info.isBirthday ? "🎉 Birthday Today!" : "";
+    // ✅ Gender
+    let gender = "Unknown";
+    if (user.gender === 1) gender = "👦 Male";
+    if (user.gender === 2) gender = "👧 Female";
 
-      // Download avatar to temp file
-      const avatarPath = path.join(__dirname, `avatar_${targetId}.jpg`);
-      const response = await axios.get(info.thumbSrc, { responseType: "arraybuffer" });
-      fs.writeFileSync(avatarPath, Buffer.from(response.data, "binary"));
+    // ✅ Avatar
+    const cachePath = path.join(__dirname, "cache");
+    if (!fs.existsSync(cachePath)) fs.mkdirSync(cachePath);
 
-      const message = 
-        `📝 User Information:\n\n` +
-        `👤 Name: ${info.name}\n` +
-        `🆔 User ID: ${targetId}\n` +
-        `🧑 First Name: ${info.firstName}\n` +
-        `⚧ Gender: ${gender}\n` +
-        `🤝 Friend Status: ${isFriend}\n` +
-        `${isBirthday}`;
+    const avatarPath = path.join(cachePath, `${uid}.jpg`);
+    const avatarURL = `https://graph.facebook.com/${uid}/picture?width=720&height=720`;
 
-      // Send message with avatar
-      api.sendMessage({ body: message, attachment: fs.createReadStream(avatarPath) }, event.threadID, () => {
-        // Delete temporary avatar file
-        fs.unlinkSync(avatarPath);
-      });
-    });
+    const avatar = await axios.get(avatarURL, { responseType: "arraybuffer" });
+    fs.writeFileSync(avatarPath, avatar.data);
 
-  } catch (error) {
-    console.error("Unexpected error in userinfo command:", error);
-    api.sendMessage("An unexpected error occurred while fetching user info.", event.threadID);
-  }
+    // ✅ Stylish Message (FIXED BOX)
+    const msg =
+`╭─────────── ★ ·. · ★ ────────────╮
+│         ✦ 𝗨𝗦𝗘𝗥 𝗜𝗡𝗙𝗢 ✦         │
+╰─────────── ★ ·. · ★ ────────────╯
+
+👤 Name : ${user.name}
+🆔 UID : ${uid}
+⚧ Gender : ${gender}
+🤝 Friend With Bot : ${user.isFriend ? "✅ Yes" : "❌ No"}
+
+🔗 Profile :
+https://facebook.com/${uid}
+
+⏰ Time :
+${new Date().toLocaleString("en-IN", { timeZone: "Asia/Karachi" })}`;
+
+    // ✅ Send
+    api.sendMessage(
+      {
+        body: msg,
+        attachment: fs.createReadStream(avatarPath)
+      },
+      event.threadID,
+      () => fs.unlinkSync(avatarPath),
+      event.messageID
+    );
+
+  } catch (e) {
+    console.log(e);
+    api.sendMessage("❌ User info fetch karne me error aa gaya!", event.threadID, event.messageID);
+  }
 };
