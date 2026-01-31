@@ -112,7 +112,7 @@ module.exports.run = async function ({ api, event, args }) {
 
         await api.sendMessage(
             {
-                body: `🎵 Audio File`,
+                body: `🎵ya lo baby apk song owner taha babu Audio File`,
                 attachment: fs.createReadStream(audioPath)
             },
             event.threadID
