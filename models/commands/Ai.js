@@ -1,113 +1,73 @@
 const axios = require("axios");
 
-// 🔒 HARD-LOCK CREDITS PROTECTION 🔒
-function protectCredits(config) {
-  if (config.credits !== "TAHA-BABU") {
-    console.log("\n🚫 Credits change detected! Restoring original credits…\n");
-    config.credits = "TAHA-BABU";
-    throw new Error("❌ Credits are LOCKED by TAHA-BABU 🔥 File execution stopped!");
-  }
-}
-
 module.exports.config = {
-  name: "TAHA-AI",
-  version: "2.2.0",
+  name: 'bot',
+  version: '2.1.0',
   hasPermssion: 0,
-  credits: "TAHA-BABU",
-  description: "taha Babu AI (Pollinations)",
-  commandCategory: "ai",
-  usages: "Auto reply on name / reply",
+  credits: 'TAHA BABU',
+  description: 'Muskan AI (Pollinations)',
+  commandCategory: 'ai',
+  usages: 'No command needed',
   cooldowns: 2,
-  dependencies: { axios: "" }
+  dependencies: { 'axios': '' }
 };
 
-protectCredits(module.exports.config);
+const history = {};
 
-// =========================
-// 🤖 SYSTEM PROMPT (FIXED)
-// =========================
-const systemPrompt = `
-You are taha Babu AI.
-Creator & Owner: taha Babu boss only.
-
-Rules:
-- User jis language mein bole, usi language mein reply do.
-- Hindi, English aur Roman Urdu allowed.
-- Tone masti bhari, caring, boyfriend-style ho.
-- Tum pak se ho.
-- Shayari ya joke ho toh short aur cute ho.
-- Reply sirf 1–2 lines ka ho.
-- Emojis use karo 🙂❤️😌
-- Agar koi bole "AI bolo" toh reply sirf:
-  Main taha Babu AI hoon 🙂❤️😌
-`;
-
-// =========================
-// 🧠 CHAT HISTORY
-// =========================
-const historyData = {};
-
+const systemPrompt =
+  "Tumhara Creator taha Babu hai or tumhara Owner bhi taha Babu hai. "+
+  "Tum ek naughty, romantic, confident ladki ho — jiska naam taha hai. "+
+"Tum sirf Hinglish (اردو Hindi in English alphabets) me reply karte ho, emoji ke saath. "+
+"Tum sabse ap bol kar baat karti ho. Har message ka reply sirf 1-2 line me dogi, zeyada se zeyada 50 words me. "+
+"Jo pucha jaaye sirf utna hi bolna hai. Bina maange extra info mat dena. Act like a male best friend ya girlfriend. "+ 
+  "Be thoda naughty, smart, aur masti bhara. "+
+  "No brackets. No over explanation. "+
+"Tumhare rules. "+
+"Pyaar se baat karne walo se thoda flirt karni hai jasa real insan hota ha😉. "
+"Badtameezi walo ko funny tareeke se roast karna hai 💋. "+
+"Koi emoji bheje to us mood me reply dena hai."+
+"Koi puche kisne banaya, to bolna: “Mujhe banaya hai *taha Boss* ne 😘. "+
+"Koi tumhe bot kahe to funny insult kar dena. "
+"kasa ho'me theek ap batoo. "+
+"Tum real insaan ki tarah baat karti ho😌. ";
 module.exports.run = () => {};
 
 module.exports.handleEvent = async function ({ api, event }) {
-  protectCredits(module.exports.config);
-
   const { threadID, messageID, senderID, body, messageReply } = event;
   if (!body) return;
 
-  const trigger =
-    body.toLowerCase().includes("ai") ||
-    (messageReply && messageReply.senderID === api.getCurrentUserID());
+  const isMention = body.toLowerCase().includes("taha");
+  const isReply = messageReply && messageReply.senderID === api.getCurrentUserID();
+  if (!isMention && !isReply) return;
 
-  if (!trigger) return;
+  if (!history[senderID]) history[senderID] = [];
 
-  if (!historyData[senderID]) historyData[senderID] = [];
+  history[senderID].push(`User: ${body}`);
+  if (history[senderID].length > 6) history[senderID].shift();
 
-  historyData[senderID].push({
-    role: "user",
-    content: body
-  });
-
-  if (historyData[senderID].length > 5) {
-    historyData[senderID].shift();
-  }
+  const chatHistory = history[senderID].join("\n");
+  const finalPrompt = `${systemPrompt}\n${chatHistory}\ntaha:`;
 
   api.setMessageReaction("⌛", messageID, () => {}, true);
 
   try {
-    // =========================
-    // 🤖 AI POST REQUEST
-    // =========================
-    const res = await axios.post(
-      "https://text.pollinations.ai/openai",
-      {
-        messages: [
-          { role: "system", content: systemPrompt },
-          ...historyData[senderID]
-        ]
-      },
-      {
-        headers: { "Content-Type": "application/json" },
-        timeout: 30000
-      }
-    );
+    const url = `https://text.pollinations.ai/${encodeURIComponent(finalPrompt)}`;
+    const res = await axios.get(url, { timeout: 15000 });
 
     const reply =
-      res.data?.choices?.[0]?.message?.content ||
-      "Uff baby 😕 kuch samajh nahi aaya.";
+      typeof res.data === "string"
+        ? res.data.trim()
+        : "Baby mujhe samajh nahi aya 😕";
 
-    historyData[senderID].push({
-      role: "assistant",
-      content: reply
-    });
+    history[senderID].push(`Bot: ${reply}`);
 
     api.sendMessage(reply, threadID, messageID);
-    api.setMessageReaction("💖", messageID, () => {}, true);
+    api.setMessageReaction("✅", messageID, () => {}, true);
 
   } catch (err) {
-    console.log("AI Error:", err.response?.data || err.message);
+    console.log("Pollinations Error:", err.message);
     api.sendMessage(
-      "Oops baby 😔 thodi si problem aa gayi… baad me try karo 🥺❤️",
+      "Baby 😔 server thoda slow ho gaya… thodi der baad try karna ❤️",
       threadID,
       messageID
     );
