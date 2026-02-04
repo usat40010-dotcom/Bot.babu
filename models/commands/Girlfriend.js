@@ -4,7 +4,7 @@ module.exports.config = {
   name: "girlfriend",
   version: "2.1.0",
   hasPermssion: 0,
-  credits: "TAHA-BABU", // Isse agar koi badlega toh bhi niche wala logic kaam karega
+  credits: "shaan khan", // Isse agar koi badlega toh bhi niche wala logic kaam karega
   description: "Auto-reply AI girlfriend jab bot ke message par reply ho",
   commandCategory: "ai",
   usages: "[reply to bot message]",
