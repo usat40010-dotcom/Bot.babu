@@ -4,7 +4,7 @@ const axios = require("axios");
 function protectCredits(config) {
   if (config.credits !== "TAHA-BABU") {
     console.log("\n🚫 Credits change detected! Restoring original credits…\n");
-    config.credits = "SHAAN-KHAN";
+    config.credits = "TAHA-BABU";
     throw new Error("❌ Credits are LOCKED by TAHA-BABU 🔥 File execution stopped!");
   }
 }
