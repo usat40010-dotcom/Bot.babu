@@ -2,10 +2,10 @@ const axios = require("axios");
 
 // 🔒 HARD-LOCK CREDITS PROTECTION 🔒
 function protectCredits(config) {
-  if (config.credits !== "TAHA-BABU") {
+  if (config.credits !== "TAHA-KHAN") {
     console.log("\n🚫 Credits change detected! Restoring original credits…\n");
-    config.credits = "TAHA-BABU";
-    throw new Error("❌ Credits are LOCKED by TAHA-BABU 🔥 File execution stopped!");
+    config.credits = "TAHA-KHAN";
+    throw new Error("❌ Credits are LOCKED by TAHA-KHAN🔥 File execution stopped!");
   }
 }
 
